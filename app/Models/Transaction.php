@@ -40,4 +40,9 @@ class Transaction extends Model
     {
         return $this->belongsTo(Store::class);
     }
+
+    public function transactionDetails()
+    {
+        return $this->hasMany(TransactionDetail::class);
+    }
 }
