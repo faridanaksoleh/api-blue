@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('city');
             $table->text('address');
             $table->string('postal_code');
-            $table->boolean('is_verified')->default('false');
+            $table->boolean('is_verified')->default(false);
             $table->timestamps();
         });
     }
