@@ -1,10 +1,8 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-// web.com/home
-Route::get('/home');
-
-// web.com/about
-Route::get('/about');
+Route::apiResource('users', UserController::class);
+Route::get('user/all/paginated', [UserController::class, 'getAllPaginated']);
