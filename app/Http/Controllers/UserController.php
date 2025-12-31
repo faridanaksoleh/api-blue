@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Helpers\ResponseHelper;
 use App\Http\Requests\UserStoreRequest;
+use App\Http\Requests\UserUpdateRequest;
 use App\Http\Resources\PaginateResource;
 use App\Http\Resources\UserResource;
 use App\Interfaces\UserRepositoryInterface;
 use Illuminate\Http\Request;
-use LDAP\Result;
 
 use function Laravel\Prompts\search;
 
@@ -97,9 +97,26 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UserUpdateRequest $request, string $id)
     {
-        //
+        $validatedData = $request->validated();
+
+        try {
+            $user = $this->userRepository->getById($id);
+
+            if(!$user) {
+                return ResponseHelper::jsonResponse(true, 'Data User Tidak Ditemukan', null, 404);
+            }
+
+            $user = $this->userRepository->update(
+                $id, 
+                $validatedData
+            );
+            
+            return ResponseHelper::jsonResponse(true, 'Data User Berhasil Diupdate', new UserResource($user), 200);
+        } catch (\Exception $e) {
+            return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
+        }
     }
 
     /**
