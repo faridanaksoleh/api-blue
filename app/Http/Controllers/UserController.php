@@ -32,7 +32,7 @@ class UserController extends Controller
                 true
             );
 
-            return ResponseHelper::jsonResponse(true, 'Data User Berhaisl Diambil', UserResource::collection($users), 200);
+            return ResponseHelper::jsonResponse(true, 'Data User Berhasil Diambil', UserResource::collection($users), 200);
         } catch (\Exception $e) {
             return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
         }
@@ -52,7 +52,7 @@ class UserController extends Controller
                 $request['row_per_page'],
             );
 
-            return ResponseHelper::jsonResponse(true, 'Data User Berhaisl Diambil', PaginateResource::make($users, UserResource::class), 200);
+            return ResponseHelper::jsonResponse(true, 'Data User Berhasil Diambil', PaginateResource::make($users, UserResource::class), 200);
         } catch (\Exception $e) {
             return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
         }
@@ -71,7 +71,18 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            $user = $this->userRepository->getById($id);
+
+            if(!$user) {
+                return ResponseHelper::jsonResponse(true, 'Data User Tidak Ditemukan', null, 404);
+
+            }
+
+            return ResponseHelper::jsonResponse(true, 'Data User Berhasil Diambil', new UserResource($user), 200);
+        } catch (\Exception $e) {
+            return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
+        }
     }
 
     /**
