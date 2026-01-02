@@ -148,6 +148,19 @@ class StoreController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $store = $this->storeRepository->getById($id);
+
+            if(!$store) {
+                return ResponseHelper::jsonResponse(true, 'Data Toko Tidak Ditemukan', null, 404);
+
+            }
+
+            $store = $this->storeRepository->delete($id);
+            
+            return ResponseHelper::jsonResponse(true, 'Data Toko Berhasil Dihapus', new StoreResource($store), 200);
+        } catch (\Exception $e) {
+            return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
+        }
     }
 }
