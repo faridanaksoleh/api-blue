@@ -86,4 +86,23 @@ class StoreRepository implements StoreRepositoryInterface
             throw new Exception($e->getMessage());
         }
     }
+
+    public function updateVerifiedStatus(
+        string $id, 
+        bool $isVerified
+    ) {
+        DB::beginTransaction();
+    
+        try {
+            $store = Store::find($id);
+            $store->is_verified = $isVerified;
+            $store->save();
+
+            DB::commit();
+
+            return $store;
+        } catch (\Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
 }

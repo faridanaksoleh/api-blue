@@ -24,4 +24,9 @@ interface StoreRepositoryInterface
     public function create(
         array $data
     );
+
+    public function updateVerifiedStatus(
+        string $id,
+        bool $isVerified,
+    );
 }
