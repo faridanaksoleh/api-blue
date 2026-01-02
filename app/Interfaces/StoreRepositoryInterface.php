@@ -29,4 +29,10 @@ interface StoreRepositoryInterface
         string $id,
         bool $isVerified,
     );
+
+    public function update(
+        string $id,
+        array $data
+    );
+
 }
