@@ -17,5 +17,7 @@ interface StoreRepositoryInterface
         ?int $rowPerPage,
     );
 
-    
+    public function getById(
+        string $id
+    );
 }
