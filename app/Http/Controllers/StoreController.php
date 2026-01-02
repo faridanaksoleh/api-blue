@@ -6,6 +6,8 @@ use App\Helpers\ResponseHelper;
 use App\Http\Resources\PaginateResource;
 use App\Interfaces\StoreRepositoryInterface;
 use App\Http\Resources\StoreResource;
+use App\Http\Resources\UserResource;
+use App\Http\Requests\StoreStoreRequest;
 use Illuminate\Http\Request;
 
 class StoreController extends Controller
@@ -61,9 +63,17 @@ class StoreController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreStoreRequest $request)
     {
-        //
+        $request = $request->validated();
+
+        try {
+            $store = $this->storeRepository->create($request);
+
+            return ResponseHelper::jsonResponse(true, 'Data Toko Berhasil Dibuat', new StoreResource($store), 201);
+        } catch (\Exception $e) {
+            return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
+        }
     }
 
     /**
