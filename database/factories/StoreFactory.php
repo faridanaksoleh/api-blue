@@ -6,6 +6,7 @@ use App\Models\Store;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Helpers\ImageHelper\ImageHelper as HelpersImageHelper;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Store>
@@ -23,6 +24,7 @@ class StoreFactory extends Factory
         $imageHelper = new HelpersImageHelper();
         
         return [
+            'id' => Str::uuid(),    //beda dari tutor
             'user_id' => User::factory(),
             'name' => $this->faker->company(),
             'logo' => $imageHelper->storeAndResizeImage(

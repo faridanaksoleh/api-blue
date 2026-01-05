@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $admin = User::create([
+        $admin = User::factory()->create([  //beda dari tutor
             'name' => 'Admin',
             'email' => 'admin@blue.com',
             'email_verified_at' => now(),
