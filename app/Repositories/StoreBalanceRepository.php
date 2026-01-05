@@ -2,17 +2,17 @@
 
 namespace App\Repositories;
 
-use App\Interfaces\StoreBallanceRepositoryInterface;
-use App\Models\StoreBallance;
+use App\Interfaces\StoreBalanceRepositoryInterface;
+use App\Models\StoreBalance;
 
-class StoreBallanceRepository implements StoreBallanceRepositoryInterface
+class StoreBalanceRepository implements StoreBalanceRepositoryInterface
 {
     public function getAll(
         ?string $search,
         ?int $limit,
         bool $execute
     ) {
-        $query = StoreBallance::where(function ($query) use ($search) {
+        $query = StoreBalance::where(function ($query) use ($search) {
             if($search) {
                 $query->search($search);
             }

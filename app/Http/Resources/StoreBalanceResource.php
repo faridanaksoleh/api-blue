@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\StoreResource;
 
-class StoreBallanceResource extends JsonResource
+class StoreBalanceResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

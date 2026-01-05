@@ -4,17 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Helpers\ResponseHelper;
 use Illuminate\Http\Request;
-use App\Interfaces\StoreBallanceRepositoryInterface;
-use App\Http\Resources\StoreBallanceResource;
+use App\Interfaces\StoreBalanceRepositoryInterface;
+use App\Http\Resources\StoreBalanceResource;
 use App\Http\Resources\PaginateResource;
 
-class StoreBallanceController extends Controller
+class StoreBalanceController extends Controller
 {
-    private StoreBallanceRepositoryInterface $storeBallanceRepository;
+    private StoreBalanceRepositoryInterface $storeBalanceRepository;
 
-    public function __construct(StoreBallanceRepositoryInterface $storeBallanceRepository) 
+    public function __construct(StoreBalanceRepositoryInterface $storeBalanceRepository) 
     {
-        $this->storeBallanceRepository = $storeBallanceRepository;
+        $this->storeBalanceRepository = $storeBalanceRepository;
     }
     /**
      * Display a listing of the resource.
@@ -22,13 +22,13 @@ class StoreBallanceController extends Controller
     public function index(Request $request)
     {
         try {
-            $storeBallances = $this->storeBallanceRepository->getAll(
+            $storeBalances = $this->storeBalanceRepository->getAll(
                 $request->search,
                 $request->limit,
                 true
             );
 
-            return ResponseHelper::jsonResponse(true, 'Data Dompet Toko Berhasil Diambil', StoreBallanceResource::collection($storeBallances), 200);
+            return ResponseHelper::jsonResponse(true, 'Data Dompet Toko Berhasil Diambil', StoreBalanceResource::collection($storeBalances), 200);
         } catch (\Exception $e) {
             return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
         }
@@ -43,12 +43,12 @@ class StoreBallanceController extends Controller
         ]);
 
         try {
-            $storeBallances = $this->storeBallanceRepository->getAllPaginated(
+            $storeBalances = $this->storeBalanceRepository->getAllPaginated(
                 $request['search'] ?? null,
                 $request['row_per_page'],
             );
 
-            return ResponseHelper::jsonResponse(true, 'Data Dompet Toko Berhasil Diambil', PaginateResource::make($storeBallances, StoreBallanceResource::class), 200);
+            return ResponseHelper::jsonResponse(true, 'Data Dompet Toko Berhasil Diambil', PaginateResource::make($storeBalances, StoreBalanceResource::class), 200);
         } catch (\Exception $e) {
             return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
         }

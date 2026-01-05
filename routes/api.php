@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\StoreBallanceController;
+use App\Http\Controllers\StoreBalanceController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -13,5 +13,5 @@ Route::apiResource('store', StoreController::class);
 Route::get('store/all/paginated', [StoreController::class, 'getAllPaginated']);
 Route::post('store/{id}/verified', [StoreController::class, 'updateVerifiedStatus']);
 
-Route::apiResource('store-ballance', StoreBallanceController::class);
-Route::get('store-ballance/all/paginated', [StoreBallanceController::class, 'getAllPaginated']);
+Route::apiResource('store-balance', StoreBalanceController::class);
+Route::get('store-balance/all/paginated', [StoreBalanceController::class, 'getAllPaginated']);

@@ -2,7 +2,7 @@
 
 namespace App\Interfaces;
 
-interface StoreBallanceRepositoryInterface
+interface StoreBalanceRepositoryInterface
 {
     public function getAll(
         ?string $search,
