@@ -13,5 +13,5 @@ Route::apiResource('store', StoreController::class);
 Route::get('store/all/paginated', [StoreController::class, 'getAllPaginated']);
 Route::post('store/{id}/verified', [StoreController::class, 'updateVerifiedStatus']);
 
-Route::apiResource('store-balance', StoreBalanceController::class);
+Route::apiResource('store-balance', StoreBalanceController::class)->except(['store', 'update', 'delete']);
 Route::get('store-balance/all/paginated', [StoreBalanceController::class, 'getAllPaginated']);
