@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\StoreResource;
+use App\Http\Resources\StoreBalanceHistoryResource;
 
 class StoreBalanceResource extends JsonResource
 {
@@ -19,6 +20,7 @@ class StoreBalanceResource extends JsonResource
             'id' => $this->id,
             'store' => new StoreResource(($this->store)),
             'balance' => (float) (string) $this->balance,
+            'store_balance_histories' => StoreBalanceHistoryResource::collection($this->whenLoaded('storeBalanceHistories')),
         ];
     }
 }
