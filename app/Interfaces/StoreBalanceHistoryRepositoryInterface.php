@@ -14,4 +14,8 @@ interface StoreBalanceHistoryRepositoryInterface
         ?string $search,
         ?int $rowPerPage,
     );
+
+    public function getById(
+        string $id,
+    );
 }
