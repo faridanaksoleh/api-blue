@@ -4,10 +4,11 @@ namespace App\Models;
 
 use App\Traits\UUID;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Withdrawal extends Model
 {
-    use UUID;
+    use UUID, HasFactory;
 
     protected $fillable = [
         'store_balance_id',
@@ -15,6 +16,7 @@ class Withdrawal extends Model
         'bank_account_name',
         'bank_account_number',
         'bank_name',
+        'proof',
         'status'
     ];
 
