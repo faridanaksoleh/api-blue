@@ -42,7 +42,7 @@ class WithdrawalFactory extends Factory
             // History permintaan penarikan (pending)
             $withdrawal->storeBalance->storeBalanceHistories()->create([
                 'id' => Str::uuid(),    //beda dari tutor
-                'type' => 'withdrawal',
+                'type' => 'withdraw',
                 'reference_id' => $withdrawal->id,
                 'reference_type' => Withdrawal::class,
                 'amount' => $withdrawal->amount,
@@ -52,7 +52,7 @@ class WithdrawalFactory extends Factory
             // Penarikan dana
             $withdrawal->storeBalance->storeBalanceHistories()->create([
                 'id' => Str::uuid(),    //beda dari tutor
-                'type' => 'withdrawal',
+                'type' => 'withdraw',
                 'reference_id' => $withdrawal->id,
                 'reference_type' => Withdrawal::class,
                 'amount' => $withdrawal->amount,
