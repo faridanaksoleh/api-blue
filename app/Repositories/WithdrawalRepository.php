@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Interfaces\WithdrawalRepositoryInterface;
 use App\Models\Withdrawal;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\UploadedFile;
 
 class WithdrawalRepository implements WithdrawalRepositoryInterface
 {
@@ -82,9 +83,37 @@ class WithdrawalRepository implements WithdrawalRepositoryInterface
 
             return $withdrawal;
         } catch (\Exception $e) {
-            DB::rollBack();
-
             throw new \Exception($e->getMessage());
         }
+    }
+
+    public function approve(
+        string $id,
+        UploadedFile $proof
+    ) {
+        DB::beginTransaction();
+        
+        try {
+            $withdrawal = Withdrawal::find($id);
+            $withdrawal->status = 'approved';
+            $withdrawal->proof = $proof->store('assets/withdrawal', 'public');
+            $withdrawal->save();
+
+            $storeBalanceHistoryRepository = new StoreBalanceHistoryRepository;
+            $storeBalanceHistoryRepository->create([
+                'store_balance_id' => $withdrawal->store_balance_id,
+                'type' => 'withdraw',
+                'reference_id' => $withdrawal->id,
+                'reference_type' => Withdrawal::class,
+                'amount' => -$withdrawal->amount,
+                'remarks' => "Permintaan penarikan dana ke {$withdrawal->bank_name} - {$withdrawal->bank_account_number} disetujui",
+            ]);
+
+            DB::commit();
+
+            return $withdrawal;
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        } 
     }
 }
