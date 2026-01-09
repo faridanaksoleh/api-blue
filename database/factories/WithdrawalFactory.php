@@ -45,7 +45,7 @@ class WithdrawalFactory extends Factory
                 'type' => 'withdraw',
                 'reference_id' => $withdrawal->id,
                 'reference_type' => Withdrawal::class,
-                'amount' => $withdrawal->amount,
+                'amount' => -$withdrawal->amount,
                 'remarks' => "Permintaan penarikan dana ke {$withdrawal->bank_name} - {$withdrawal->bank_account_number}",
             ]);
 
@@ -55,7 +55,7 @@ class WithdrawalFactory extends Factory
                 'type' => 'withdraw',
                 'reference_id' => $withdrawal->id,
                 'reference_type' => Withdrawal::class,
-                'amount' => $withdrawal->amount,
+                'amount' => -$withdrawal->amount,
                 'remarks' => "Permintaan penarikan dana ke {$withdrawal->bank_name} - {$withdrawal->bank_account_number} telah di proses",
             ]);
 
