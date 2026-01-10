@@ -68,7 +68,18 @@ class BuyerController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            $buyer = $this->buyerRepository->getById($id);
+
+            if(!$buyer) {
+                return ResponseHelper::jsonResponse(true, 'Data Pembeli Tidak Ditemukan', null, 404);
+
+            }
+
+            return ResponseHelper::jsonResponse(true, 'Data Pembeli Berhasil Diambil', new BuyerResource($buyer), 200);
+        } catch (\Exception $e) {
+            return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
+        }
     }
 
     /**
