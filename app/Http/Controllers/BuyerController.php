@@ -120,6 +120,19 @@ class BuyerController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $buyer = $this->buyerRepository->getById($id);
+
+            if(!$buyer) {
+                return ResponseHelper::jsonResponse(true, 'Data Pembeli Tidak Ditemukan', null, 404);
+
+            }
+
+            $buyer = $this->buyerRepository->delete($id);
+            
+            return ResponseHelper::jsonResponse(true, 'Data Pembeli Berhasil Dihapus', new BuyerResource($buyer), 200);
+        } catch (\Exception $e) {
+            return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
+        }
     }
 }

@@ -99,4 +99,23 @@ class BuyerRepository implements BuyerRepositoryInterface
             throw new Exception($e->getMessage()) ;
         }
     }
+
+    public function delete(
+        string $id
+    ) {
+        DB::beginTransaction();
+        
+        try {
+            $buyer = Buyer::find($id);
+            $buyer->delete();
+            
+            DB::commit();
+            
+            return $buyer;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            
+            throw new Exception($e->getMessage()) ;
+        }
+    }
 }
