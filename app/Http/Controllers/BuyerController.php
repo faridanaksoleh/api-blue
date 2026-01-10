@@ -6,6 +6,7 @@ use App\Helpers\ResponseHelper;
 use App\Http\Resources\BuyerResource;
 use App\Interfaces\BuyerRepositoryInterface;
 use App\Http\Resources\PaginateResource;
+use App\Http\Requests\BuyerStoreRequest;
 use Illuminate\Http\Request;
 
 class BuyerController extends Controller
@@ -58,9 +59,17 @@ class BuyerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(BuyerStoreRequest $request)
     {
-        //
+        $request = $request->validated();
+        
+        try {
+            $buyer = $this->buyerRepository->create($request);
+            
+            return ResponseHelper::jsonResponse(true, 'Data Pembeli Berhasil Ditambahkan', new BuyerResource($buyer), 201);
+        } catch (\Exception $e) {
+            return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
+        }
     }
 
     /**

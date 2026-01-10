@@ -18,4 +18,8 @@ interface BuyerRepositoryInterface
     public function getById(
         string $id,
     );
+
+    public function create(
+        array $data
+    );
 }
