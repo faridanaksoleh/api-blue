@@ -6,6 +6,7 @@ use App\Helpers\ResponseHelper;
 use App\Http\Resources\PaginateResource;
 use App\Interfaces\ProductCategoryRepositoryInterface;
 use App\Http\Resources\ProductCategoryResource;
+use App\Http\Requests\ProductCategoryStoreRequest;
 use Illuminate\Http\Request;
 
 class ProductCategoryController extends Controller
@@ -60,9 +61,17 @@ class ProductCategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProductCategoryStoreRequest $request)
     {
-        //
+        $request = $request->validated();
+        
+        try {
+            $productCategory = $this->productCategoryRepository->create($request);
+            
+            return ResponseHelper::jsonResponse(true, 'Data Kategori Produk Berhasil Dibuat', new ProductCategoryResource($productCategory), 201);
+        } catch (\Exception $e) {
+            return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
+        }
     }
 
     /**

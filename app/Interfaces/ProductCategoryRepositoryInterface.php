@@ -24,4 +24,8 @@ interface ProductCategoryRepositoryInterface
     public function getBySlug(
         string $slug
     );
+
+    public function create(
+        array $data
+    );
 }
