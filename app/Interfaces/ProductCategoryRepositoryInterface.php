@@ -2,6 +2,8 @@
 
 namespace App\Interfaces;
 
+use PHPUnit\Framework\Constraint\StringEqualsStringIgnoringLineEndings;
+
 interface ProductCategoryRepositoryInterface
 {
     public function getAll(
@@ -32,5 +34,9 @@ interface ProductCategoryRepositoryInterface
     public function update(
         string $id,
         array $data
+    );
+
+    public function delete(
+        string $id
     );
 }

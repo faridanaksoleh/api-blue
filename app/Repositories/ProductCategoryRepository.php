@@ -140,4 +140,23 @@ class ProductCategoryRepository implements ProductCategoryRepositoryInterface
             throw new Exception($e->getMessage());
         }
     }
+
+    public function delete(
+        string $id
+    ) {
+        DB::beginTransaction();
+        
+        try {
+            $productCategory = ProductCategory::find($id);
+            $productCategory->delete();
+            
+            DB::commit();
+            
+            return $productCategory;
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            throw new Exception($e->getMessage());
+        }
+    }
 }

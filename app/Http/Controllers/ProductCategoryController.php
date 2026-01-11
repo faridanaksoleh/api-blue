@@ -138,6 +138,19 @@ class ProductCategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $ProductCategory = $this->productCategoryRepository->getById($id);
+
+            if(!$ProductCategory) {
+                return ResponseHelper::jsonResponse(true, 'Data Kategori Produk Tidak Ditemukan', null, 404);
+
+            }
+
+            $productCategory = $this->productCategoryRepository->delete($id);
+
+            return ResponseHelper::jsonResponse(true, 'Data Kategori Produk Berhasil Dihapus', null, 200);
+        } catch (\Exception $e) {
+            return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
+        }
     }
 }
