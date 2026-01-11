@@ -28,4 +28,9 @@ interface ProductCategoryRepositoryInterface
     public function create(
         array $data
     );
+
+    public function update(
+        string $id,
+        array $data
+    );
 }
