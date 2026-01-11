@@ -56,4 +56,12 @@ class ProductCategoryRepository implements ProductCategoryRepositoryInterface
         
         return $query->first();
     }
+
+    public function getBySlug(
+        string $slug
+    ) {
+        $query = ProductCategory::where('slug', $slug)->with('childrens');
+        
+        return $query->first();
+    }
 }
