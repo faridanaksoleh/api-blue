@@ -16,4 +16,8 @@ interface ProductCategoryRepositoryInterface
         ?bool $isParent = null,
         ?int $rowPerPage,
     );
+
+    public function getById(
+        string $id
+    );
 }

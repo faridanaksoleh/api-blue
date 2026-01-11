@@ -70,7 +70,18 @@ class ProductCategoryController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            $ProductCategory = $this->productCategoryRepository->getById($id);
+
+            if(!$ProductCategory) {
+                return ResponseHelper::jsonResponse(true, 'Data Kategori Produk Tidak Ditemukan', null, 404);
+
+            }
+
+            return ResponseHelper::jsonResponse(true, 'Data Kategori Produk Berhasil Diambil', new ProductCategoryResource($ProductCategory), 200);
+        } catch (\Exception $e) {
+            return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
+        }
     }
 
     /**
