@@ -9,12 +9,17 @@ class ProductCategoryRepository implements ProductCategoryRepositoryInterface
 {
     public function getAll(
         ?string $search,
+        ?bool $isParent = null,
         ?int $limit,
         bool $execute
     ) {
-        $query = ProductCategory::where(function ($query) use ($search) {
+        $query = ProductCategory::where(function ($query) use ($search, $isParent) {
             if($search) {
                 $query->search($search);
+            }
+
+            if($isParent === true) {
+                $query->whereNull('parent_id');
             }
         });
 
@@ -31,10 +36,12 @@ class ProductCategoryRepository implements ProductCategoryRepositoryInterface
 
     public function getAllPaginated(
         ?string $search, 
+        ?bool $isParent = null,
         ?int $rowPerPage,
     ) {
         $query = $this->getAll(
             $search, 
+            $isParent,
             null, 
             false
         );

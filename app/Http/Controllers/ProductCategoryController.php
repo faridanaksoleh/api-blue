@@ -25,6 +25,7 @@ class ProductCategoryController extends Controller
         try {
             $productCategories = $this->productCategoryRepository->getAll(
                 $request->search,
+                $request->is_parent,
                 $request->limit,
                 true
             );
@@ -39,13 +40,14 @@ class ProductCategoryController extends Controller
     {
         $request = $request->validate([
             'search' => 'nullable|string',
+            'is_parent' => 'nullable|boolean',
             'row_per_page' => 'nullable|integer',
-
         ]);
 
         try {
             $productCategories = $this->productCategoryRepository->getAllPaginated(
                 $request['search'] ?? null,
+                $request['is_parent'] ?? null,
                 $request['row_per_page'],
             );
 
