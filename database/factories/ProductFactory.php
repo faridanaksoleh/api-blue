@@ -26,11 +26,10 @@ class ProductFactory extends Factory
         $conditions = ['new', 'second'];
         
         return [
-            'id' => (string) Str::uuid(), // <--- TAMBAHKAN BARIS INI
             'store_id' => Store::factory(),
             'product_category_id' => ProductCategory::inRandomOrder()->first()?->id ?? ProductCategory::factory(),
             'name' => $name,
-            'slug' => Str::slug($name),
+            'slug' => Str::slug($name) . '-' . Str::random(5),
             'description' => $this->faker->paragraphs(rand(2, 4), true),
             'condition' => $this->faker->randomElement($conditions),
             'price' => $this->faker->randomFloat(2, 10000, 1000000),

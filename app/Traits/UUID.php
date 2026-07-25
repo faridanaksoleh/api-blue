@@ -6,9 +6,10 @@ use Illuminate\Support\Str;
 
 trait UUID
 {
-    // Ubah nama dari 'boot' menjadi 'bootUUID'
-    protected static function bootUUID() 
+    protected static function boot()
     {
+        parent::boot();
+
         static::creating(function ($model) {
             if ($model->getKey() === null) {
                 $model->setAttribute($model->getKeyName(), Str::uuid()->toString());

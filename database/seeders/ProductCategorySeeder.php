@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Helpers\ImageHelper\ImageHelper;
 use App\Models\ProductCategory;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
@@ -77,11 +77,7 @@ class ProductCategorySeeder extends Seeder
         $imageHelper = new ImageHelper;
 
         foreach ($categories as $category) {
-            // Kita generate ID Parent-nya secara manual di sini
-            $parentId = Str::uuid()->toString();
-
-            ProductCategory::create([
-                'id' => $parentId, // Paksa masukkan ID
+            $parent = ProductCategory::create([
                 'name' => $category['name'],
                 'slug' => Str::slug($category['name']),
                 'tagline' => $category['tagline'],
@@ -97,7 +93,6 @@ class ProductCategorySeeder extends Seeder
 
             foreach ($category['children'] as $child) {
                 ProductCategory::create([
-                    'id' => Str::uuid()->toString(), // Paksa masukkan ID untuk anak
                     'name' => $child['name'],
                     'slug' => Str::slug($child['name']),
                     'tagline' => $child['tagline'],
@@ -108,7 +103,7 @@ class ProductCategorySeeder extends Seeder
                         250,
                         250,
                     ),
-                    'parent_id' => $parentId, // Hubungkan dengan ID parent yang sudah dibuat
+                    'parent_id' => $parent->id,
                 ]);
             }
         }

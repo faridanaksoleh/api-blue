@@ -2,33 +2,16 @@
 
 namespace App\Models;
 
+use App\Traits\UUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str; // Jangan lupa import ini
 
 class ProductCategory extends Model
 {
-    use HasFactory; 
-    // HAPUS "use UUID;" biar tidak bentrok/bingung. Kita manual saja.
+    use HasFactory, UUID;
 
-    // ==========================================
-    // POIN 1: MEMAKSA LARAVEL TAHU INI BUKAN ANGKA
-    // ==========================================
-    public $incrementing = false; // Matikan auto-increment
-    protected $keyType = 'string'; // Beritahu ID adalah string/text
-
-    // ==========================================
-    // POIN 2: GENERATE UUID SAAT CREATING
-    // ==========================================
-    protected static function booted()
-    {
-        static::creating(function ($model) {
-            // Jika ID kosong, isikan dengan UUID baru
-            if (empty($model->id)) {
-                $model->id = (string) Str::uuid();
-            }
-        });
-    }
+    public $incrementing = false;
+    protected $keyType = 'string';
 
     protected $fillable = [
         'parent_id',
@@ -49,7 +32,7 @@ class ProductCategory extends Model
         return $this->belongsTo(ProductCategory::class, 'parent_id', 'id');
     } 
     
-    public function children() // Saya ubah jadi children (bukan childrens) biar grammarnya pas
+    public function children()
     {
         return $this->hasMany(ProductCategory::class, 'parent_id', 'id');
     }

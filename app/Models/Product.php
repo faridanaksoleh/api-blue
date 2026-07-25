@@ -10,17 +10,9 @@ class Product extends Model
 {
     use UUID, HasFactory;
 
+    // INI WAJIB ADA AGAR RELASI TIDAK NULL
     public $incrementing = false;
     protected $keyType = 'string';
-
-    protected static function booted()
-    {
-        static::creating(function ($model) {
-            if (empty($model->id)) {
-                $model->id = (string) \Illuminate\Support\Str::uuid();
-            }
-        });
-    }
 
     protected $fillable = [
         'store_id',
@@ -50,12 +42,12 @@ class Product extends Model
 
     public function productCategory()
     {
-        return $this->belongsTo(ProductCategory::class);
+        return $this->belongsTo(ProductCategory::class, 'product_category_id', 'id');
     }
 
     public function productImages()
     {
-        return $this->hasMany(productImage::class);
+        return $this->hasMany(ProductImage::class);
     }
 
     public function transactionDetails()
