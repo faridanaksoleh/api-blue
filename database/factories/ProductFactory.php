@@ -26,6 +26,7 @@ class ProductFactory extends Factory
         $conditions = ['new', 'second'];
         
         return [
+            'id' => (string) Str::uuid(), // <--- TAMBAHKAN BARIS INI
             'store_id' => Store::factory(),
             'product_category_id' => ProductCategory::inRandomOrder()->first()?->id ?? ProductCategory::factory(),
             'name' => $name,
