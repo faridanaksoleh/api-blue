@@ -16,8 +16,8 @@ class ProductImageResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'product' => new ProductResource($this->product),
-            'image' => asset('storage/' . $this->image),
+            'product' => new ProductResource($this->whenLoaded('product')),
+            'image' => url('storage/' . $this->image),
             'is_thumbnail' => $this->is_thumbnail,
         ];
     }
