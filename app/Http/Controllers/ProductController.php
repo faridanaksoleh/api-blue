@@ -90,7 +90,6 @@ class ProductController extends Controller
             $product = $this->productRepository->getBySlug($slug);
 
             if(!$product) {
-                // Sesuai temuan bug minor tadi, kita set false untuk error 404
                 return ResponseHelper::jsonResponse(false, 'Data Produk Tidak Ditemukan', null, 404);
             }
 
