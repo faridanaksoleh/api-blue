@@ -84,6 +84,22 @@ class ProductController extends Controller
         }
     }
 
+    public function showBySlug(string $slug)
+    {
+        try {
+            $product = $this->productRepository->getBySlug($slug);
+
+            if(!$product) {
+                // Sesuai temuan bug minor tadi, kita set false untuk error 404
+                return ResponseHelper::jsonResponse(false, 'Data Produk Tidak Ditemukan', null, 404);
+            }
+
+            return ResponseHelper::jsonResponse(true, 'Data Produk Berhasil Diambil', new ProductResource($product), 200);
+        } catch (\Exception $e) {
+            return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
+        }
+    }
+
     /**
      * Update the specified resource in storage.
      */

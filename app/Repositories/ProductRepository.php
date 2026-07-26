@@ -56,4 +56,12 @@ class ProductRepository implements ProductRepositoryInterface
         
         return $query->first();
     }
+
+    public function getBySlug(
+        string $slug
+    ) {
+        $query = Product::where('slug', $slug)->with('productImages');
+        
+        return $query->first();
+    }
 }

@@ -93,7 +93,7 @@ class ProductCategoryController extends Controller
             return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
         }
     }
-
+    
     public function showBySlug(string $slug)
     {
         try {
