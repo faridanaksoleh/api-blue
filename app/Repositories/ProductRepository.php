@@ -6,6 +6,7 @@ use App\Interfaces\ProductRepositoryInterface;
 use App\Models\Product;
 use Illuminate\Support\Str;
 use PhpParser\Node\Expr\Isset_;
+use Illuminate\Support\Facades\DB;
 
 class ProductRepository implements ProductRepositoryInterface
 {

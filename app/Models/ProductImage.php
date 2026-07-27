@@ -15,6 +15,10 @@ class ProductImage extends Model
         'image',
         'is_thumbnail',
     ];
+
+    protected $casts = [
+        'is_thumbnail' => 'boolean',
+    ];
     
     public function product()
     {

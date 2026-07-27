@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ResponseHelper;
+use App\Http\Requests\ProductStoreRequest;
 use App\Http\Resources\PaginateResource;
 use App\Interfaces\ProductRepositoryInterface;
 use App\Http\Resources\ProductResource;
@@ -60,9 +61,17 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProductStoreRequest $request)
     {
-        //
+        $request = $request->validated();
+
+        try {
+            $product = $this->productRepository->create($request);
+
+            return ResponseHelper::jsonResponse(true, 'Produk Berhasil Ditambahkan', new ProductResource($product), 201);
+        } catch (\Exception $e) {
+            return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
+        }
     }
 
     /**

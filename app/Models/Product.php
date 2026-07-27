@@ -28,6 +28,7 @@ class Product extends Model
 
     protected $casts = [
         'price' => 'decimal:2',
+        'weight' => 'decimal:2',
     ];
 
     public function scopeSearch($query, $search)
@@ -41,7 +42,7 @@ class Product extends Model
     }
 
     public function productCategory()
-    {
+    { 
         return $this->belongsTo(ProductCategory::class, 'product_category_id', 'id');
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\ProductCategory;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ProductStoreRequest extends FormRequest
@@ -15,7 +16,16 @@ class ProductStoreRequest extends FormRequest
     {
         return [
             'store_id' => 'required|exists:stores,id',
-            'product_category_id' => 'required|exists:product_categories,id',
+            'product_category_id' => [
+                'required',
+                'exists:product_categories,id',
+                function ($attribute, $value, $fail) {
+                    $category = ProductCategory::find($value);
+                    if ($category && $category->parent_id === null) {
+                        $fail('Kategori Produk harus memiliki kategori induk');
+                    }
+                }
+            ],
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'condition' => 'required|in:new,second',
